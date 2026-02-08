@@ -42,6 +42,10 @@ app.use((req, res) => {
     pageTitle: 'Page not found | DocUtilityHub',
     pageDescription: 'The requested page could not be found. Explore free document tools without login.'
   });
+app.use('/', toolRoutes);
+
+app.use((req, res) => {
+  res.status(404).render('404', { pageTitle: 'Page not found' });
 });
 
 app.listen(PORT, () => {
