@@ -1,0 +1,54 @@
+<%- include('partials/header') %>
+
+<section class="tool-page">
+  <h1><%= tool.h1 || tool.title %></h1>
+  <p class="description"><%= tool.description %></p>
+
+  <div class="ad-slot">Ad Slot (below description)</div>
+
+  <form action="/tools/<%= tool.slug %>/process" method="post" enctype="multipart/form-data" class="tool-form">
+    <label for="document">Upload your PDF</label>
+    <input type="file" id="document" name="document" accept="application/pdf" required />
+    <button type="submit">Run tool</button>
+    <small>Files auto-deleted immediately after processing.</small>
+  </form>
+
+  <% if (error) { %>
+    <section class="state error">
+      <h2>Couldn’t process this file</h2>
+      <p><%= error %></p>
+    </section>
+  <% } %>
+
+  <% if (result) { %>
+    <section class="output">
+      <h2><%= result.title %></h2>
+      <ul>
+        <% result.items.forEach((item) => { %>
+          <li><%= item %></li>
+        <% }) %>
+      </ul>
+    </section>
+    <div class="ad-slot">Ad Slot (after output)</div>
+  <% } else { %>
+    <section class="state empty">
+      <h2>No output yet</h2>
+      <p>Upload a file and click “Run tool” to see results.</p>
+    </section>
+  <% } %>
+</section>
+
+<section class="faq">
+  <h2>FAQ</h2>
+  <% (tool.faq || [
+    { q: 'Is this free?', a: 'Yes, all tools are free and ad-supported.' },
+    { q: 'Do I need to sign up?', a: 'No. You can use tools instantly without an account.' }
+  ]).forEach((entry) => { %>
+    <article>
+      <h3><%= entry.q %></h3>
+      <p><%= entry.a %></p>
+    </article>
+  <% }) %>
+</section>
+
+<%- include('partials/footer') %>
