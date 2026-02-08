@@ -27,7 +27,7 @@ app.use(
   })
 );
 
-// Global defaults for shared templates/partials to prevent EJS ReferenceErrors.
+// Shared template defaults to prevent missing-variable crashes in EJS partials.
 app.use((req, res, next) => {
   res.locals.pageTitle = 'DocUtilityHub | Free no-login document tools';
   res.locals.pageDescription =
