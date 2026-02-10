@@ -27,6 +27,21 @@ app.use(
   })
 );
 
+// Shared template defaults to prevent missing-variable crashes in EJS partials.
+app.use((req, res, next) => {
+  res.locals.pageTitle = 'DocUtilityHub | Free no-login document tools';
+  res.locals.pageDescription =
+    'Free, no-login document tools for students, careers, and one-click PDF fixes.';
+  next();
+});
+
+app.use('/', toolRoutes);
+
+app.use((req, res) => {
+  res.status(404).render('404', {
+    pageTitle: 'Page not found | DocUtilityHub',
+    pageDescription: 'The requested page could not be found. Explore free document tools without login.'
+  });
 app.use('/', toolRoutes);
 
 app.use((req, res) => {
